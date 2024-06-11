@@ -1,92 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import UserWithdrawal from "../components/UserWithdrawal";
+import styles from '../styles/UserInfo.module.css'
 
-function UserJoin() {
-    const [formData, setFormData] = useState({
+function UserInfo() {
+    const [userInfo, setUserInfo] = useState({
         email: '',
-        password: '',
-        confirmPassword: '',
         nickname: ''
     });
-
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return;
-        }
-
-        try {
-            const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/user`, {
-                email: formData.email,
-                password: formData.password,
-                nickname: formData.nickname
+    useEffect(() => {
+        const email = localStorage.getItem('loggedInUserEmail');
+        if (email) {
+            axios.get(`${process.env.REACT_APP_SERVER_URL}/user/info`, {
+                headers: {
+                    email: email
+                },
+                withCredentials: true
+            })
+            .then(response => {
+                setUserInfo(response.data.data);
+            })
+            .catch(error => {
+                console.error("사용자 정보 가져오기 실패: ", error);
+                navigate('/user/login');
             });
-            alert("회원가입 성공.");
-            navigate("/user/login");
-
-        } catch (error) {
-            console.error("회원가입 실패: ", error);
-            alert("회원가입 실패.");
+        } else {
+            navigate('/user/login');
         }
-    };
+    }, [navigate]);
+
+    const handleShow = () => setShowModal(true);
+    const handleEdit = () => navigate('/user/edit');
 
     return (
-        <form onSubmit={handleSubmit}>
+        <div>
+            <h2>회원 정보</h2>
             <div>
-                <label>이메일:</label>
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                <label>이메일: </label>
+                <span>{userInfo.email}</span>
             </div>
             <div>
-                <label>비밀번호:</label>
-                <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                <label>닉네임: </label>
+                <span>{userInfo.nickname}</span>
             </div>
-            <div>
-                <label>비밀번호 확인:</label>
-                <input
-                    type="password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div>
-                <label>닉네임:</label>
-                <input
-                    type="text"
-                    name="nickname"
-                    value={formData.nickname}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <button type="submit">회원가입</button>
-        </form>
+            <button onClick={handleEdit} className={styles.navigationButton}>수정</button>
+            <button onClick={handleShow} className={styles.navigationButton}>탈퇴</button>
+            <UserWithdrawal showModal={showModal} setShowModal={setShowModal} />
+        </div>
     );
 }
 
-export default UserJoin;
+export default UserInfo;
