@@ -1,6 +1,8 @@
 .navigationButton {
     padding: 10px;
     margin: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
 }
 
 .chatContainer {
@@ -38,9 +40,20 @@
 .boardSubmitButton {
     display: flex;
     flex-direction: row-reverse;
-    justify-self: left;
     padding: 5px;
     margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
+}
+
+.selectButton {
+    display: flex;
+    border: 2px, solid, #000000;
+    font-size: 20px;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #ffffff;
 }
 
 .textbox {
@@ -51,15 +64,18 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     border: 1px, solid, #000000;
     resize: none;
+    padding: 5px 10px;
     vertical-align: middle;
 }
 
 .textsubmit {
     width: 10%;
-    padding: 85px 5px;
+    font-size: 30px;
+    padding: 78.5px 5px;
     border: 2px, solid, #000000;
     border-radius: 10px;
     vertical-align: middle;
+    background-color: #ffffff;
 }
 
 .centerSpinner {
@@ -72,4 +88,5 @@
     display: flex;         /* Flexbox를 사용 */
     justify-content: center; /* 가운데 정렬 */
     align-items: center;   /* 중앙 정렬 */
+    background-color: rgba(255, 255, 255, 0.8);
 }

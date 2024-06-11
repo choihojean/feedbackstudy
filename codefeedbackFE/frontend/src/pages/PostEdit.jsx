@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import styles from '../styles/PostEdit.module.css'
 
 function PostEdit() {
 
@@ -87,12 +88,13 @@ function PostEdit() {
                         name="content"
                         value={post.content}
                         onChange={handleChange}
-                        rows="30"
+                        rows="20"
                         cols="150"
                         required
+                        className={styles.textbox}
                     />
                 </div>
-                <button type="submit">게시글 수정</button>
+                <button type="submit" className={styles.navigationButton}>게시글 수정</button>
             </form>
         </div>
     );

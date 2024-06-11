@@ -10,6 +10,7 @@ export default function Home() {
     const [text, setText] = React.useState('');
     const [history, setHistory] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [selectOption, setSelectOption] = React.useState("question");
 
     const email = localStorage.getItem('loggedInUserEmail');
     const nickname = localStorage.getItem('loggedInUserNickname');
@@ -24,12 +25,17 @@ export default function Home() {
         }
     },[]);
 
+    const handleChange = (e) => {
+        e.preventDefault();
+        setSelectOption(e.target.value);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setText('');
         setIsLoading(true);
         try {
-            await CodeFeedback(text, history).then((res) => {
+            await CodeFeedback(text, history, selectOption).then((res) => {
                 setHistory([...history, [text, res]]);
             });
         } catch (error) {
@@ -99,6 +105,10 @@ export default function Home() {
                     );
                 })}
                 <button className={styles.boardSubmitButton} onClick={createBoard}>Submit</button>
+                <select className={styles.selectButton} onChange={handleChange}>
+                    <option value="question">질문</option>
+                    <option value="explanation">설명</option>
+                </select>
                 <form onSubmit={handleSubmit}>
                     <textarea className={styles.textbox} rows="8" value={text} onChange={(e) => setText(e.target.value)} required/>
                     <input className={styles.textsubmit} type='submit' value="입력"/>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import UserWithdrawal from "../components/UserWithdrawal";
+import styles from '../styles/UserInfo.module.css'
 
 function UserInfo() {
     const [userInfo, setUserInfo] = useState({
@@ -46,8 +47,8 @@ function UserInfo() {
                 <label>닉네임: </label>
                 <span>{userInfo.nickname}</span>
             </div>
-            <button onClick={handleEdit}>수정</button>
-            <button onClick={handleShow}>탈퇴</button>
+            <button onClick={handleEdit} className={styles.navigationButton}>수정</button>
+            <button onClick={handleShow} className={styles.navigationButton}>탈퇴</button>
             <UserWithdrawal showModal={showModal} setShowModal={setShowModal} />
         </div>
     );

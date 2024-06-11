@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import styles from '../styles/UserEdit.module.css'
 
 function UserEdit() {
     const [formData, setFormData] = useState({
@@ -87,7 +88,7 @@ function UserEdit() {
                     required
                 />
             </div>
-            <button type="submit">회원정보 수정</button>
+            <button type="submit" className={styles.navigationButton}>회원정보 수정</button>
         </form>
     );
 }
