@@ -1,0 +1,28 @@
+.title {
+    margin: 20px 30px;
+}
+
+.buttonContainer {
+    margin: 0px 20px;
+}
+
+.navigationButton {
+    padding: 5px 20px;
+    margin: 0px 5px;
+}
+
+.content {
+    margin: 10px 30px;
+}
+
+.userMessage {
+    font-size: 24px;
+    margin: 0px 20px;
+    border-width: 3px;
+}
+
+.systemMessage {
+    font-size: 20px;
+    margin: 0px 20px;
+    border-width: 3px;
+}
